@@ -1,66 +1,83 @@
 package Customer.CustomerAuthentication;
 
-import java.util.*;
-import javax.mail.*;
-import javax.mail.internet.*;
-import javax.activation.*;
+
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class SendMail {
-    public static void main(String[] args) {
+   private String email;
+   private int code;
+   //constructor
+   SendMail(String email, int code){
+       this.email = email;
+       this.code = code;
+   }
 
-        // Recipient's email address
-        String to = "abdulrahmanmfam2003@gmail.com";
-  
-        // Sender's email address
-        String from = "abdfawzy2008@gmail.com";
-  
-        // Sender's email password
-        String password = "password";
-  
-        // SMTP server URL
-        String host = "smtp.example.com";
-  
-        // Create properties object
-        Properties properties = System.getProperties();
-  
-        // Set SMTP server URL
-        properties.setProperty("mail.smtp.host", host);
-  
-        // Set email authentication
-        properties.setProperty("mail.smtp.auth", "true");
-  
-        // Create session object
-        Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator() {
-           protected PasswordAuthentication getPasswordAuthentication() {
-              return new PasswordAuthentication(from, password);
-           }
-        });
-  
-        try {
-           // Create MimeMessage object
-           MimeMessage message = new MimeMessage(session);
-  
-           // Set From field
-           message.setFrom(new InternetAddress(from));
-  
-           // Set To field
-           message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-  
-           // Set email subject
-           message.setSubject("Test Email");
-  
-           // Set email message
-           message.setText("This is a test email message.");
-  
-           // Send email message
-           Transport.send(message);
-  
-           System.out.println("Email sent successfully.");
-        } catch (MessagingException mex) {
-           mex.printStackTrace();
-        }
-    }
-    
+   public void send() {
+
+      // Recipient's email ID needs to be mentioned.
+      String to = email;
+
+      // Sender's email ID needs to be mentioned
+      String from = "abdfawzy2008@gmail.com";
+
+      // Assuming you are sending email from through gmails smtp
+      String host = "smtp.gmail.com";
+
+      // Get system properties
+      Properties properties = System.getProperties();
+
+      // Setup mail server
+      properties.put("mail.smtp.host", host);
+      properties.put("mail.smtp.port", "465");
+      properties.put("mail.smtp.ssl.enable", "true");
+      properties.put("mail.smtp.auth", "true");
+
+      // Get the Session object.// and pass username and password
+      Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+
+         protected PasswordAuthentication getPasswordAuthentication() {
+
+               return new PasswordAuthentication("abdfawzy2008@gmail.com", "wmtccpuszmulhkki");
+
+         }
+
+      });
+
+      // Used to debug SMTP issues
+      //session.setDebug(true);
+
+      try {
+         // Create a default MimeMessage object.
+         MimeMessage message = new MimeMessage(session);
+
+         // Set From: header field of the header.
+         message.setFrom(new InternetAddress(from));
+
+         // Set To: header field of the header.
+         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+         // Set Subject: header field
+         message.setSubject("OTP for Toffee App");
+
+         // Now set the actual message
+         message.setText("Your OTP is: " + code);
+
+         System.out.println("sending...");
+         // Send message
+         Transport.send(message);
+         System.out.println("Sent message successfully....");
+      } catch (MessagingException mex) {
+         mex.printStackTrace();
+      }
+
+   }
+
 }
