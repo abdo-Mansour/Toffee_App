@@ -2,8 +2,9 @@ package Customer.CustomerAuthentication;
 
 import Customer.CustomerCart.Cart;
 import Customer.CustomerOrder.OrderManager;
+
 public class RegUser {
-    
+
     private int userID;
     private String username;
     private String userEmail;
@@ -14,10 +15,8 @@ public class RegUser {
     private OrderManager orderManager;
     private int loyaltyPoints;
 
-    
-
-    //constructor
-    RegUser(int sessionID, int userID, String username, String userEmail, String userPass, String userAddress){
+    // constructor
+    public RegUser(int sessionID, int userID, String username, String userEmail, String userPass, String userAddress) {
         this.userID = userID;
         this.username = username;
         this.userEmail = userEmail;
@@ -29,50 +28,49 @@ public class RegUser {
         sendData();
     }
 
-    private void sendData(){
-        //TODO: send data to database
+    private void sendData() {
+        // TODO: send data to database
     }
 
-    public int getPoints(){
+    public int getPoints() {
         return this.loyaltyPoints;
     }
 
-    public void setPoints(int points){
+    public void setPoints(int points) {
         this.loyaltyPoints = points;
     }
 
-    //getters and setters
-    public int getUserID(){
+    // getters and setters
+    public int getUserID() {
         return this.userID;
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return this.username;
     }
 
-    public String getUserEmail(){
+    public String getUserEmail() {
         return this.userEmail;
     }
 
-    public String getUserPassword(){
+    public String getUserPassword() {
         return this.userPassword;
     }
 
-    public String getUserAddress(){
+    public String getUserAddress() {
         return this.userAddress;
     }
 
-    public String getUserStatus(){
+    public String getUserStatus() {
         return this.userStatus;
     }
 
-    public Cart getUserCart(){
+    public Cart getUserCart() {
         return this.userCart;
     }
 
-    public OrderManager getOrderManager(){
+    public OrderManager getOrderManager() {
         return this.orderManager;
     }
 
-    
 }
