@@ -15,10 +15,14 @@ public class Category {
      * + getProduct(id : int): Product
     */
 
-    public Category(int categoryID, String categoryName , ArrayList<Product> products) {
+    public Category(int categoryID, String categoryName) {
         this.categoryID = categoryID;
         this.categoryName = categoryName;
         this.products = new ArrayList<Product>(products);
+    }
+
+    public void addProduct(Product product) {
+        products.add(product);
     }
 
     public Product getProduct(int id) {

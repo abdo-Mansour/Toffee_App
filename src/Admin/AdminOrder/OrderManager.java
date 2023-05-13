@@ -22,4 +22,10 @@ public class OrderManager {
     public ArrayList<Order> getOrders() {
         return orders;
     }
+
+    public void closeOrder(int orderID) {
+        Order order = getOrder(orderID);
+        order.setOrderStatus("Closed");
+        //TODO: update database
+    }
 } 

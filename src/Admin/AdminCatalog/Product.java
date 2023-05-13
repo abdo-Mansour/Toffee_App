@@ -4,7 +4,7 @@ public class Product {
     
     private int productID;
     private String name;
-    private Category category;
+    private String category;
     private String itemDescription;
     private String brand;
     private float price;
@@ -13,7 +13,7 @@ public class Product {
     private String status;
     private int availableQuantity;
 
-    public Product(int productID, String name, Category category, String itemDescription, String brand, float price, boolean isLoose, float discount, String status) {
+    public Product(int productID, String name, String category, String itemDescription, String brand, float price, boolean isLoose, float discount, String status , int availableQuantity) {
         this.productID = productID;
         this.name = name;
         this.category = category;
@@ -23,13 +23,14 @@ public class Product {
         this.isLoose = isLoose;
         this.discount = discount;
         this.status = status;
+        this.availableQuantity = availableQuantity; 
     }
 
     public int getID() {
         return productID;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
@@ -69,7 +70,7 @@ public class Product {
         this.productID = productID;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
