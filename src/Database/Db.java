@@ -22,7 +22,8 @@ public class Db {
             url += ";encrypt=false";
 
             mainConnection = DriverManager.getConnection(url, DATABASE_USERNAME, DATABASE_PASSWORD);
-            
+            Statement stmt = mainConnection.createStatement();
+            ResultSet rs = stmt.executeQuery("USE Toffee");
             System.out.println("database connection successful");
         } catch (Exception e) {
             System.out.println(e);
@@ -40,17 +41,16 @@ public class Db {
     // checking database functions
     public boolean checkUser(String username, String password) {
         return true;
-
     }
 
     // writing database functions
     public void addUser(RegUser user) {
         try {
-            PreparedStatement stmt = mainConnection.prepareStatement("INSERT INTO User (UserID,Name, Email, Password,Adress) VALUES (?,?, ?, ?,?)");
+            PreparedStatement stmt = mainConnection.prepareStatement("INSERT INTO users (UserID,Name, Email, Password,Adress) VALUES (?,?, ?, ?,?)");
             stmt.setString(1, Integer.toString(user.getUserID()));
             stmt.setString(2, user.getUsername());
-            stmt.setString(3, user.getUserPassword());
-            stmt.setString(4, user.getUserEmail());
+            stmt.setString(3, user.getUserEmail());
+            stmt.setString(4, user.getUserPassword());
             stmt.setString(5, user.getUserAddress());
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -59,15 +59,50 @@ public class Db {
     }
 
     public void addOrder(Order order) {
-
+        try {
+            PreparedStatement stmt = mainConnection
+                    .prepareStatement(
+                            "INSERT INTO \"User\" (UserID,Name, Email, Password,Address) VALUES (?,?, ?, ?,?)");
+            stmt.setString(1, Integer.toString(Order.getUserID()));
+            stmt.setString(2, user.getUsername());
+            stmt.setString(3, user.getUserEmail());
+            stmt.setString(4, user.getUserPassword());
+            stmt.setString(5, user.getUserAddress());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error adding user: " + e.getMessage());
+        }
     }
 
     public void addProduct(Product product) {
-
+        try {
+            PreparedStatement stmt = mainConnection
+                    .prepareStatement(
+                            "INSERT INTO \"User\" (UserID,Name, Email, Password,Address) VALUES (?,?, ?, ?,?)");
+            stmt.setString(1, Integer.toString(product.getID()));
+            stmt.setString(2, product.getName());
+            stmt.setString(3, product.getPrice());
+            stmt.setString(4, product.getBrand());
+            stmt.setString(5, product.;
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error adding user: " + e.getMessage());
+        }
     }
 
     public void addCategory(Category category) {
-
+        try {
+            PreparedStatement stmt = mainConnection
+                    .prepareStatement("INSERT INTO \"User\" (UserID,Name, Email, Password,Address) VALUES (?,?, ?, ?,?)");
+            stmt.setString(1, Integer.toString(user.getUserID()));
+            stmt.setString(2, user.getUsername());
+            stmt.setString(3, user.getUserEmail());
+            stmt.setString(4, user.getUserPassword());
+            stmt.setString(5, user.getUserAddress());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error adding user: " + e.getMessage());
+        }
     }
 
     // reading database functions
@@ -108,7 +143,7 @@ public class Db {
     public static void main(String[] args) {
         Db db = new Db();
         db.connectServer();
-        RegUser user = new RegUser(1, 1, "amr", "amrkhaled123@toffee.com", "amr123", "qwerty");
+        RegUser user = new RegUser(1, 3, "amr", "amrkhaled123@toffee.com", "amr123", "qwerty");
         db.addUser(user);
     }
 }
