@@ -46,7 +46,9 @@ public class Db {
     // writing database functions
     public void addUser(RegUser user) {
         try {
-            PreparedStatement stmt = mainConnection.prepareStatement("INSERT INTO users (UserID,Name, Email, Password,Adress) VALUES (?,?, ?, ?,?)");
+            PreparedStatement stmt = mainConnection
+                    .prepareStatement(
+                            "INSERT INTO \"User\" (UserID,Name, Email, Password,Address) VALUES (?,?, ?, ?,?)");
             stmt.setString(1, Integer.toString(user.getUserID()));
             stmt.setString(2, user.getUsername());
             stmt.setString(3, user.getUserEmail());
