@@ -8,7 +8,7 @@ public class Category {
     private String categoryName;
     private ArrayList<Product> products;
 
-    Category(int id ,String categoryName, ArrayList<Product> products){
+   public Category(int id ,String categoryName, ArrayList<Product> products){
         this.categoryID = id;
         this.categoryName = categoryName;
         this.products = new ArrayList<Product>(products);
