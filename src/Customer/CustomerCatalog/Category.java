@@ -1,17 +1,32 @@
 package Customer.CustomerCatalog;
 
-public class Category {
-    //- categoryName: string
-    //- products : Product[]
-    private String categoryName;
-    private Product[] products;
+import java.util.ArrayList;
 
-    Category(String categoryName, Product[] products){
+public class Category {
+    
+    private String categoryName;
+    private ArrayList<Product> products;
+
+    Category(String categoryName, ArrayList<Product> products){
         this.categoryName = categoryName;
-        this.products = products;
+        this.products = new ArrayList<Product>(products);
     }
+
+    public ArrayList<Product> getProducts(){
+        return this.products;
+    }
+    
     public Product getProduct(int id){
+        for(Product product : products){
+            if(product.getID() == id){
+                return product;
+            }
+        }
         return null;
+    }
+
+    public String getName(){
+        return this.categoryName;
     }
     
 }

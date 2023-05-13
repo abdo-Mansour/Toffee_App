@@ -1,5 +1,6 @@
 package Customer.CustomerAuthentication;
 
+import Customer.CustomerCart.Cart;
 public class RegUser {
     
     private int userID;
@@ -8,6 +9,8 @@ public class RegUser {
     private String userPassword;
     private String userAddress;
     private String userStatus;
+    private Cart userCart;
+    private OrderManager orderManager;
     private int loyaltyPoints;
 
     
@@ -20,6 +23,7 @@ public class RegUser {
         this.userPassword = userPass;
         this.userAddress = userAddress;
         this.userStatus = "Active";
+        this.userCart = new Cart(this);
         this.loyaltyPoints = 0;
         sendData();
     }

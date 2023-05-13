@@ -1,32 +1,62 @@
 package Customer.CustomerCatalog;
 
+
+import java.util.ArrayList;
 public class MainCatalog {
     //- categories : Category[]
-    private Category[] categories;
-    
+    private ArrayList<Category> categories;
     // + searchByName( productName: string): Product[]
     // + searchByBrand( productBrand: string): Product[]
     // + getAllProductsUnder( categoryName: string): Product[]
     // + returnAll(): Product[]
-    MainCatalog(){}
-
-    public void addCategory(Category category){
-        
+    public MainCatalog(){
+        loadCatalog();
     }
-    public Product[] searchByName(String productName){
+
+    public void loadCatalog(){
+        //TODO: implement by database
+        //get all info from database
+        //create categories
+        //create products
+        //add products to categories
+
+
+    }
+
+    public ArrayList<Product> searchByName(String productName){
+        //TODO: implement by database
         return null;
     }
 
-    public Product[] searchByBrand(String productBrand){
+    public ArrayList<Product> searchByBrand(String productBrand){
+        //TODO: implement by database
         return null;
     }
 
-    public Product[] getAllProductsUnder(String categoryName){
-        return null;
+    public ArrayList<Product> getAllProductsUnder(String categoryName){
+        Category category = null;
+        for(Category cat : categories){
+            if(cat.getName().equals(categoryName)){
+                category = cat;
+            }
+        }
+        if(category == null){
+            return null;
+        }
+        return category.getProducts();
     }
 
-    public Product[] returnAll(){
-        return null;
+    public ArrayList<Product> returnAll(){
+
+        ArrayList<Product> allProducts = new ArrayList<Product>();
+        for(Category category : categories){
+            for(Product product : category.getProducts()){
+                allProducts.add(product);
+            }
+        }
+        return allProducts;
+
     }
+
 
 }
