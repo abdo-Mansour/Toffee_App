@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 public class Category {
     
+    private int categoryID;
     private String categoryName;
     private ArrayList<Product> products;
 
-    Category(String categoryName, ArrayList<Product> products){
+    Category(int id ,String categoryName, ArrayList<Product> products){
+        this.categoryID = id;
         this.categoryName = categoryName;
         this.products = new ArrayList<Product>(products);
     }

@@ -81,6 +81,8 @@ public class Product {
         return this.isLoose;
     }
 
-
+    public int getAvailableQuantity(){
+        return this.availableQuantity;
+    }
 
 }

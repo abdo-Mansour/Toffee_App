@@ -22,7 +22,7 @@ public class Db {
             url += ";encrypt=false";
 
             mainConnection = DriverManager.getConnection(url, DATABASE_USERNAME, DATABASE_PASSWORD);
-
+            
             System.out.println("database connection successful");
         } catch (Exception e) {
             System.out.println(e);
@@ -46,7 +46,7 @@ public class Db {
     // writing database functions
     public void addUser(RegUser user) {
         try {
-            PreparedStatement stmt = mainConnection.prepareStatement("INSERT INTO users (UserID,Name, Email, Password,Adress) VALUES (?,?, ?, ?,?)");
+            PreparedStatement stmt = mainConnection.prepareStatement("INSERT INTO User (UserID,Name, Email, Password,Adress) VALUES (?,?, ?, ?,?)");
             stmt.setString(1, Integer.toString(user.getUserID()));
             stmt.setString(2, user.getUsername());
             stmt.setString(3, user.getUserPassword());
