@@ -30,5 +30,9 @@ public class Category {
     public String getName(){
         return this.categoryName;
     }
+
+    public int getID(){
+        return this.categoryID;
+    }
     
 }
