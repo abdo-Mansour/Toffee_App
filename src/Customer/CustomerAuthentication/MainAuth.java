@@ -11,7 +11,7 @@ public class MainAuth {
     private RegUser regUser;
 
 
-    MainAuth(int sessionID){
+    public MainAuth(int sessionID){
         this.sessionID = sessionID;
         guestUser = new GuestUser(sessionID);
 
@@ -37,6 +37,11 @@ public class MainAuth {
         }
 
         do{
+            System.out.println("\n \nPassword must contain at least one digit [0-9].");
+            System.out.println("Password must contain at least one lowercase Latin character [a-z].");
+            System.out.println("Password must contain at least one uppercase Latin character [A-Z].");
+            System.out.println("Password must contain at least one special character like ! @ # & ( ).");
+            System.out.println("Password must contain a length of at least 8 characters and a maximum of 20 characters.");
             System.out.println("Enter your password: ");
             userPassword = input.nextLine();
             if(!checkPassword(userPassword)){
@@ -60,7 +65,6 @@ public class MainAuth {
         // Password must contain at least one uppercase Latin character [A-Z].
         // Password must contain at least one special character like ! @ # & ( ).
         // Password must contain a length of at least 8 characters and a maximum of 20 characters.
-
         String pattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()-[{}]:;',?/*~$^+=<>]).{8,20}$";
         
         return(pass.matches(pattern));
@@ -91,10 +95,7 @@ public class MainAuth {
         return true;
     }
 
-    public boolean checkLogIn(String username, String pass){
-        //TODO: DATABASE
-        return true;
-    }
+    
 
     private boolean storeUserInfo(RegUser user){
         //TODO : DATABASE
@@ -112,9 +113,13 @@ public class MainAuth {
         return code;
     }
 
-    // public static void main (String[] args){
-    //     MainAuth mainAuth = new MainAuth(1);
-    //     mainAuth.createRegUser();
-    // }
+    public RegUser getRegUser(){
+        return this.regUser;
+    }
+
+    public void setUser(RegUser user){
+        this.regUser = user;
+    }
+
 }
 

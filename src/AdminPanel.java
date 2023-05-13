@@ -22,7 +22,7 @@ public class AdminPanel {
         System.out.println("Welcome to Admin Panel \n");
         
         while(true){
-            System.out.println("Please choose an option: ");
+            System.out.println("\n Please choose an option: ");
             System.out.println("1. Manage Catalog");
             System.out.println("2. Manage Orders");
             System.out.println("3. Manage Users");
@@ -46,6 +46,7 @@ public class AdminPanel {
                     case 4:
                         System.out.println("Exiting...");
                         System.exit(0);
+                        input.close();
                         break;
                     default:
                         System.out.println("Invalid choice");
