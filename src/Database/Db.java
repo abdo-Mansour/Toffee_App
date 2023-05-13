@@ -125,6 +125,10 @@ public class Db {
         return null;
     }
 
+    public ArrayList<RegUser> getUsers() {
+        return null;
+    }
+    
     public ArrayList<Order> getOrders(RegUser user) {
         return null;
     }
@@ -136,6 +140,7 @@ public class Db {
     public Product getProductWithId(int id) {
         return null;
     }
+
 
     public RegUser getUserWithId(int id) {
         return null;

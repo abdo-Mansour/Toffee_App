@@ -15,35 +15,36 @@ public class MainCatalog {
     }
 
     public ArrayList<Product> searchByName(String productName) {
+        //TODO: database
         return null;
     }
 
     public ArrayList<Product> searchByBrand(String productBrand) {
+        //TODO: database
         return null;
     }
 
     public ArrayList<Product> getAllProductsUnder(String categoryName) {
+        //TODO: database
+        
         return null;
     }
 
     public ArrayList<Product> returnAll() {
+        //TODO: database
+        
         return null;
     }
 
-    public void createCategory() {
-    
+    public void createCategory(Category category) {
+        //TODO: database
+
     }
 
-    public void addProduct() {
-    
+    public void addProduct(Product product) {
+        //TODO: database
+        
     }
 
-    public void editProductInfo() {
-    
-    }
-
-    public void removeProduct(int id) {
-    
-    }
 
 }
