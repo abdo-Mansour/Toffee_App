@@ -1,8 +1,6 @@
 package Customer.CustomerAuthentication;
 
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.Scanner;
 import java.util.Random;
 
@@ -15,6 +13,8 @@ public class MainAuth {
 
     MainAuth(int sessionID){
         this.sessionID = sessionID;
+        guestUser = new GuestUser(sessionID);
+
     }
 
     public void createNewUser(){
@@ -22,7 +22,7 @@ public class MainAuth {
     }
 
     public void createRegUser(){
-       
+        this.guestUser = null;
         String username , userEmail , userPassword , userAddress;
         Scanner input = new Scanner(System.in);
         
