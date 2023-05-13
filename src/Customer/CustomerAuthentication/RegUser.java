@@ -24,6 +24,7 @@ public class RegUser {
         this.userAddress = userAddress;
         this.userStatus = "Active";
         this.userCart = new Cart(this);
+        this.orderManager = new OrderManager(this);
         this.loyaltyPoints = 0;
     }
 

@@ -13,7 +13,7 @@ public class MainCatalog {
     public void loadCatalog(){
         System.out.println("Loading catalog");
         db.connectServer();
-        ArrayList<Category> categories = db.getCategories();
+        categories = db.getCategories();
         db.closeConnection();
     }
 
@@ -48,6 +48,7 @@ public class MainCatalog {
     public ArrayList<Product> returnAll(){
 
         ArrayList<Product> allProducts = new ArrayList<Product>();
+        
         for(Category category : categories){
             for(Product product : category.getProducts()){
                 allProducts.add(product);

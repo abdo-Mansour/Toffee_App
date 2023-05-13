@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.Scanner;
 
 import Customer.CustomerAuthentication.*;
@@ -6,6 +7,7 @@ import Customer.CustomerCatalog.*;
 import Customer.CustomerOrder.*;
 import Customer.CustomerPayment.*;
 import Database.Db;
+import java.util.ArrayList;
 
 public class ToffeeApp {
     public static Scanner input = new Scanner(System.in);
@@ -66,6 +68,7 @@ public class ToffeeApp {
         if(db.checkUser(username, password)){
             System.out.println("\nLogin Successful");
             System.out.println("Welcome " + username);
+            mainAuth.setUser(db.getUserUsingUsername(username));
             //TODO: create user object
         }else{
             System.out.println("\n Invalid username or password");
@@ -100,7 +103,7 @@ public class ToffeeApp {
                     viewCart();
                     break;
                 case 3:
-                    viewOrders();
+                    viewOrder();
                     break;
                 case 0:
                     return;
@@ -115,14 +118,108 @@ public class ToffeeApp {
     }
 
     public static void viewCatalog(){
+        ArrayList<Product> products = mainCatalog.returnAll();
+        System.out.println("\nProducts:\n");
+        int i = 0;
+        if(mainAuth.getRegUser() != null){
+            mainCart = new Cart(mainAuth.getRegUser());
+        }
+        for(Product prod : products){
+            if(mainAuth.getRegUser() != null){
+                prod.setCart(mainCart);
+            }
+            System.out.println(i + ".  Product:" + prod.getName() + "  price" + prod.getPrice());
+            i++;
+        }
+
+        while(true){
+            System.out.println("\nPlease write the id for the product you want to add to cart: ");
+            System.out.println("Write -1 to go back");
+            int choice = input.nextInt();
+            if(choice == -1){
+                break;
+            }else if(choice >= 0 && choice < products.size()){
+                System.out.println("Available quantity: " + products.get(choice).getAvailableQuantity());
+                System.out.println("Please enter the quantity: ");
+                Float quantity = input.nextFloat();
+                if(quantity > products.get(choice).getAvailableQuantity()){
+                    System.out.println("Quantity not available");
+                }else{
+                    products.get(choice).addToCart(quantity);
+                }
+            }
+        }
+
 
     }
 
     public static void viewCart(){
-        mainCart = new Cart(mainAuth.getRegUser());
+        if(mainAuth.getRegUser() == null){
+            System.out.println("Please login to view cart");
+            return;
+        }
+
+        System.out.println("\nCart:\n");
+        mainCart.printCart();
+        System.out.println("\nTotal: " + mainCart.getTotal());
+        System.out.println("\n1. Checkout");
+        System.out.println("2. Back");
+        int choice;
+        do{
+            System.out.print("\nchoice: ");
+            choice = input.nextInt();
+    
+            switch (choice) {
+                case 1:
+                    mainCart.checkOut();
+                    System.out.println("Order placed successfully");
+                    break;
+                case 2:
+                    return;
+                default:
+                    System.out.println("Invalid choice");
+                    break;
+            }
+        }while(choice < 1 || choice > 2);
+
     }
 
-    public static void viewOrders(){
-        mainOrder = new OrderManager(mainAuth.getRegUser());
+    public static void viewOrder(){
+        if(mainAuth.getRegUser() == null){
+            System.out.println("Please login to view orders");
+            return;
+        }
+        mainOrder = mainAuth.getRegUser().getOrderManager();
+        System.out.println("\nCurrent Order:\n");
+        Order currentOrder = mainOrder.getOrder(mainOrder.getCurrentOrderID());
+        currentOrder.printOrder();
+        if(currentOrder != null){
+        }
+
+        System.out.println("\n1. Pay for Order. ");
+        System.out.println("2. Cancel Order. ");
+        System.out.println("3. Back. ");
+        int choice;
+        do{
+            System.out.print("\nchoice: ");
+            choice = input.nextInt();
+    
+            switch (choice) {
+                case 1:
+                    System.out.print("Please enter your phone number: ");
+                    int phone = input.nextInt();
+                    currentOrder.payOrder("Cash", phone);
+                    break;
+                case 2:
+                    mainOrder.cancelOrder(mainOrder.getCurrentOrderID());
+                    break;
+                case 3:
+                    return;
+                default:
+                    System.out.println("Invalid choice");
+                    break;
+            }
+        }while(choice < 1 || choice > 3);
+
     }
 }

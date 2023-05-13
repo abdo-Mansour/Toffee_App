@@ -47,6 +47,15 @@ public class Db {
      * on adding category and products we will read first to check then write
      * on adding orders we will write
      */
+    //function that executes a query to change the database
+    public void executeQuery(String query) {
+        try {
+            Statement stmt = mainConnection.createStatement();
+            stmt.executeUpdate(query);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
     // checking database functions
     public boolean checkUser(String username, String password) {
         try {
@@ -83,7 +92,14 @@ public class Db {
             stmt.setString(3, user.getUserEmail());
             stmt.setString(4, user.getUserPassword());
             stmt.setString(5, user.getUserAddress());
-            stmt.setString(6, user.getUserStatus());
+            int tempStat;
+            if(user.getUserStatus() == "Active"){
+                tempStat = 1;
+            }
+            else{
+                tempStat = 0;
+            }
+            stmt.setString(6, Integer.toString(tempStat));
             stmt.setString(7, Integer.toString(user.getLoyaltyPoints()));
 
             stmt.executeUpdate();
@@ -92,30 +108,29 @@ public class Db {
         }
     }
 
-    // public void addOrder(Order order) {
-    //     try {
-    //         // Prepare a SQL statement that inserts an order into the database
-    //         PreparedStatement statement = mainConnection
-    //                 .prepareStatement("INSERT INTO \"Order\" (Date, UserID) VALUES (?, ?)");
+    public void addOrder(Order order) {
+        try {
+            
+            // Prepare a SQL statement that inserts an order into the database
+            PreparedStatement statement = mainConnection
+                    .prepareStatement("INSERT INTO \"Orders\" (orderID, userID, orderStatus, orderDate, totalPrice, orderDestination) VALUES (?,?,?,?,?,?)");
 
-    //         // Set the values of the parameters in the SQL statement
-    //         statement.setDate(1, new java.sql.Date(order.getDate().getTime())); // convert java.util.Date to
-    //                                                                             // java.sql.Date
-    //         statement.setInt(2, order.getUserID());
+            // Set the values of the parameters in the SQL statement
+            statement.setString(1, Integer.toString(order.getID()));
+            statement.setString(2, Integer.toString(order.getUser().getUserID()));
+            statement.setString(3, order.getStatus());
+            statement.setString(4, order.getDate().getDay() + "/" + order.getDate().getMonth() + "/"
+                    + order.getDate().getYear());
+            statement.setString(5, Float.toString(order.getTotal()));
+            statement.setString(6, order.getDestination());
 
-    //         // Execute the SQL statement
-    //         statement.executeUpdate();
+            // Execute the SQL statement
+            statement.executeUpdate();
 
-    //         // Get the ID of the newly inserted order
-    //         ResultSet generatedKeys = statement.getGeneratedKeys();
-    //         if (generatedKeys.next()) {
-    //             int orderID = generatedKeys.getInt(1);
-    //             order.setOrderID(orderID);
-    //         }
-    //     } catch (SQLException e) {
-    //         System.err.println("Error adding order: " + e.getMessage());
-    //     }
-    // }
+        } catch (SQLException e) {
+            System.err.println("Error adding order: " + e.getMessage());
+        }
+    }
 
     public void addProduct(Product product) {
         try {
@@ -150,19 +165,20 @@ public class Db {
         }
     }
 
+    //Category
     // reading database functions
     public ArrayList<Category> getCategories() {
         ArrayList<Category> categoryList = new ArrayList<>();
         try {
             // Prepare a SQL statement that selects all categories
-            PreparedStatement statement = mainConnection.prepareStatement("SELECT * FROM Category");
+            PreparedStatement statement = mainConnection.prepareStatement("SELECT * FROM Catagory");
 
             // Execute the statement and get the result set
             ResultSet resultSet = statement.executeQuery();
 
             // Iterate over the result set and create a Category object for each row
             while (resultSet.next()) {
-                int categoryId = resultSet.getInt("CategoryID");
+                int categoryId = resultSet.getInt("CatagoryID");
                 String name = resultSet.getString("Name");
                 Category category = new Category(categoryId, name, getProductWithCategoryID(categoryId));
                 categoryList.add(category);
@@ -177,7 +193,7 @@ public class Db {
         ArrayList<Product> productList = new ArrayList<>();
         try {
             // Prepare a SQL statement that selects products with the given category
-            PreparedStatement statement = mainConnection.prepareStatement("SELECT * FROM Product WHERE CategoryID = ?");
+            PreparedStatement statement = mainConnection.prepareStatement("SELECT * FROM Product WHERE CatagoryID = ?");
             statement.setString(1, Integer.toString(categoryID));
 
             // Execute the statement and get the result set
@@ -194,7 +210,7 @@ public class Db {
                 String brand = resultSet.getString("Brand");
                 Float price = resultSet.getFloat("Price");
                 Float discount = resultSet.getFloat("Discount");
-                int categoryId = resultSet.getInt("CategoryID");
+                int categoryId = resultSet.getInt("CatagoryID");
                 Product product = new Product(productId, name, itemDescription, brand, price, isLoose, discount, status,
                         quantity);
                 productList.add(product);
@@ -226,7 +242,7 @@ public class Db {
                 boolean isLoose = resultSet.getBoolean("isLoose");
                 Float price = resultSet.getFloat("Price");
                 Float discount = resultSet.getFloat("Discount");
-                int categoryId = resultSet.getInt("CategoryID");
+                int categoryId = resultSet.getInt("CatagoryID");
                 Product product = new Product(productId, name, itemDescription, brand, price, isLoose, discount, status,
                         quantity);
                 productList.add(product);
@@ -257,7 +273,7 @@ public class Db {
                 boolean isLoose = resultSet.getBoolean("isLoose");
                 Float price = resultSet.getFloat("Price");
                 Float discount = resultSet.getFloat("Discount");
-                int categoryId = resultSet.getInt("CategoryID");
+                int categoryId = resultSet.getInt("CatagoryID");
                 Product product = new Product(productId, name, itemDescription, brand, price, isLoose, discount, status,
                         quantity);
                 productList.add(product);
@@ -388,7 +404,7 @@ public class Db {
                 boolean isLoose = resultSet.getBoolean("isLoose");
                 Float price = resultSet.getFloat("Price");
                 Float discount = resultSet.getFloat("Discount");
-                int categoryId = resultSet.getInt("CategoryID");
+                int categoryId = resultSet.getInt("CatagoryID");
                 product = new Product(productId, name, itemDescription, brand, price, isLoose, discount, status,
                         quantity);
             }
@@ -425,11 +441,33 @@ public class Db {
         return user;
     }
 
+    public RegUser getUserUsingUsername(String username){
+        RegUser user = null;
+        try {
+
+            // Prepare a SQL statement that selects a user with the given ID
+            PreparedStatement statement = mainConnection.prepareStatement("SELECT * FROM \"User\" WHERE Name = ?");
+            statement.setString(1, username);
+
+            // Execute the statement and get the result set
+            ResultSet resultSet = statement.executeQuery();
+
+            // If a user with the given ID is found, create a RegUser object to represent it
+            if (resultSet.next()) {
+                int userId = resultSet.getInt("UserID");
+                String name = resultSet.getString("Name");
+                String email = resultSet.getString("Email");
+                String password = resultSet.getString("Password");
+                String Adress = resultSet.getString("Address");
+                String Status = resultSet.getString("Status");
+                user = new RegUser(1, userId, name, email, password, Adress);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving user with ID " + username + " from database: " + e.getMessage());
+        }
+        return user;
+    } 
+
     // for testing
-    public static void main(String[] args) {
-        Db db = new Db();
-        db.connectServer();
-        RegUser user = getUserWithId(1);
-        System.out.println(user.getUsername());
-    }
+
 }

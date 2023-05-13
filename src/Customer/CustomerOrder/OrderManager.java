@@ -26,15 +26,16 @@ public class OrderManager {
         db.connectServer();
         db.addOrder(currOrder);
         db.closeConnection();
-
+        orders.add(currOrder);
+        
     }
 
     //get all order data from database
     private void getData(){
         //TODO: get data from database
-        db.connectServer();
-        this.orders = db.getOrders(this.user);
-        db.closeConnection();
+        // db.connectServer();
+        // this.orders = db.getOrders(this.user);
+        // db.closeConnection();
     }
 
     public Order getOrder(int id){
@@ -60,6 +61,18 @@ public class OrderManager {
 
     public ArrayList<Order> viewAllOrders(){
         return this.orders;
+    }
+
+    public void cancelOrder(int id){
+        for(Order ord : orders){
+            if(ord.getID() == id){
+                orders.remove(ord);
+                break;
+            }
+        }
+        db.connectServer();
+        db.executeQuery("DELETE FROM Orders WHERE orderID = " + id);
+        db.closeConnection();
     }
 
     public int getCurrentOrderID(){

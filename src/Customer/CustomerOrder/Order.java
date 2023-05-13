@@ -3,6 +3,7 @@ package Customer.CustomerOrder;
 import java.time.LocalDateTime; 
 
 import Customer.CustomerCart.Cart;
+import Customer.CustomerPayment.CashPay;
 import Customer.CustomerAuthentication.RegUser;
 public class Order {
     /*
@@ -41,8 +42,10 @@ public class Order {
         }
     }
 
-    public boolean payOrder(String method){
+    public boolean payOrder(String method,int phoneNum){
         //TODO: implement payment method
+        CashPay cash = new CashPay(this,phoneNum);
+        cash.processPayment();
         return true;
     }
 

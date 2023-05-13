@@ -85,4 +85,15 @@ public class Product {
         return this.availableQuantity;
     }
 
+    public void setAvailableQuantity(int availableQuantity){
+        this.availableQuantity = availableQuantity;
+    }
+
+    public void setCart(Cart cart){
+        this.userCart = cart;
+    }
+
+    public void setCategory(Category category){
+        this.category = category;
+    }
 }
