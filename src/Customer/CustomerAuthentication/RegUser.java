@@ -25,13 +25,8 @@ public class RegUser {
         this.userStatus = "Active";
         this.userCart = new Cart(this);
         this.loyaltyPoints = 0;
-        //TODO: how are you going to save the category
-        sendData();
     }
 
-    private void sendData() {
-        // TODO: send data to database
-    }
 
     public int getPoints() {
         return this.loyaltyPoints;

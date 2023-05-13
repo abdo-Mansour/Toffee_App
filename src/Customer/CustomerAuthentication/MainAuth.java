@@ -2,6 +2,7 @@ package Customer.CustomerAuthentication;
 
 
 import java.util.Scanner;
+import Database.Db;
 import java.util.Random;
 
 public class MainAuth {
@@ -9,6 +10,7 @@ public class MainAuth {
     private static int userID = 0;
     private GuestUser guestUser;
     private RegUser regUser;
+    private Db db = new Db();
 
 
     public MainAuth(int sessionID){
@@ -96,9 +98,10 @@ public class MainAuth {
     }
 
     
-
     private boolean storeUserInfo(RegUser user){
-        //TODO : DATABASE
+        db.connectServer();
+        db.addUser(user);
+        db.closeConnection();
         return true;
     }
 

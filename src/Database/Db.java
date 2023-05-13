@@ -32,6 +32,14 @@ public class Db {
         }
     }
 
+    public void closeConnection() {
+        try {
+            mainConnection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     /*
      * on log in we will read from database
      * on sign up will read first to check then write

@@ -1,37 +1,34 @@
 package Customer.CustomerCatalog;
 
-
+import Database.Db;
 import java.util.ArrayList;
 public class MainCatalog {
     //- categories : Category[]
     private ArrayList<Category> categories;
-    // + searchByName( productName: string): Product[]
-    // + searchByBrand( productBrand: string): Product[]
-    // + getAllProductsUnder( categoryName: string): Product[]
-    // + returnAll(): Product[]
+    private Db db = new Db();
     public MainCatalog(){
         loadCatalog();
     }
 
     public void loadCatalog(){
         System.out.println("Loading catalog");
-        //TODO: implement by database
-        //get all info from database
-        //create categories
-        //create products
-        //add products to categories
-
-
+        db.connectServer();
+        ArrayList<Category> categories = db.getCategories();
+        db.closeConnection();
     }
 
     public ArrayList<Product> searchByName(String productName){
-        //TODO: implement by database
-        return null;
+        db.connectServer();
+        ArrayList<Product> products = db.getProductWithName(productName);
+        db.closeConnection();
+        return products;
     }
 
     public ArrayList<Product> searchByBrand(String productBrand){
-        //TODO: implement by database
-        return null;
+        db.connectServer();
+        ArrayList<Product> products = db.getProductWithBrand(productBrand);
+        db.closeConnection();
+        return products;
     }
 
     public ArrayList<Product> getAllProductsUnder(String categoryName){
@@ -60,12 +57,5 @@ public class MainCatalog {
 
     }
 
-    //test
-    // public static void main(String[] args) {
-    //     MainCatalog catalog = new MainCatalog();
-    //     ArrayList<Product> products = catalog.returnAll();
-    //     for(Product product : products){
-    //         System.out.println(product.getName());
-    //     }
-    // }
+
 }

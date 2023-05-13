@@ -2,6 +2,7 @@ package Customer.CustomerOrder;
 
 import Customer.CustomerCart.Cart;
 import Customer.CustomerAuthentication.RegUser;
+import Database.Db;
 
 import java.util.ArrayList;
 public class OrderManager {
@@ -9,6 +10,8 @@ public class OrderManager {
     private ArrayList<Order> orders;
     private RegUser user;
     private static int currentOrderID = 0;
+    private Db db = new Db();
+    
     
 
     public OrderManager(RegUser user){
@@ -20,11 +23,18 @@ public class OrderManager {
     //save order to database after it has been placed
     private void sendData(Order currOrder){
         //TODO: send data to database
+        db.connectServer();
+        db.addOrder(currOrder);
+        db.closeConnection();
+
     }
 
     //get all order data from database
     private void getData(){
         //TODO: get data from database
+        db.connectServer();
+        this.orders = db.getOrders(this.user);
+        db.closeConnection();
     }
 
     public Order getOrder(int id){
