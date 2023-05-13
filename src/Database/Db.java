@@ -50,15 +50,16 @@ public class Db {
     // checking database functions
     public boolean checkUser(String username, String password) {
         try {
-            // Prepare a SQL statement that selects a user with the given username and password
+            // Prepare a SQL statement that selects a user with the given username and
+            // password
             PreparedStatement statement = mainConnection.prepareStatement(
                     "SELECT * FROM \"User\" WHERE Name = ? AND Password = ?");
             statement.setString(1, username);
             statement.setString(2, password);
-    
+
             // Execute the statement and get the result set
             ResultSet resultSet = statement.executeQuery();
-    
+
             // If a user with the given username and password is found, return true
             if (resultSet.next()) {
                 return true;
@@ -66,11 +67,10 @@ public class Db {
         } catch (SQLException e) {
             System.err.println("Error checking user: " + e.getMessage());
         }
-    
+
         // If no user with the given username and password is found, return false
         return false;
     }
-    
 
     // writing database functions
     public void addUser(RegUser user) {
@@ -92,30 +92,30 @@ public class Db {
         }
     }
 
-    public void addOrder(Order order) {
-        try {
-            // Prepare a SQL statement that inserts an order into the database
-            PreparedStatement statement = mainConnection
-                    .prepareStatement("INSERT INTO \"Order\" (Date, UserID) VALUES (?, ?)");
+    // public void addOrder(Order order) {
+    //     try {
+    //         // Prepare a SQL statement that inserts an order into the database
+    //         PreparedStatement statement = mainConnection
+    //                 .prepareStatement("INSERT INTO \"Order\" (Date, UserID) VALUES (?, ?)");
 
-            // Set the values of the parameters in the SQL statement
-            statement.setDate(1, new java.sql.Date(order.getDate().getTime())); // convert java.util.Date to
-                                                                                // java.sql.Date
-            statement.setInt(2, order.getUserID());
+    //         // Set the values of the parameters in the SQL statement
+    //         statement.setDate(1, new java.sql.Date(order.getDate().getTime())); // convert java.util.Date to
+    //                                                                             // java.sql.Date
+    //         statement.setInt(2, order.getUserID());
 
-            // Execute the SQL statement
-            statement.executeUpdate();
+    //         // Execute the SQL statement
+    //         statement.executeUpdate();
 
-            // Get the ID of the newly inserted order
-            ResultSet generatedKeys = statement.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                int orderID = generatedKeys.getInt(1);
-                order.setOrderID(orderID);
-            }
-        } catch (SQLException e) {
-            System.err.println("Error adding order: " + e.getMessage());
-        }
-    }
+    //         // Get the ID of the newly inserted order
+    //         ResultSet generatedKeys = statement.getGeneratedKeys();
+    //         if (generatedKeys.next()) {
+    //             int orderID = generatedKeys.getInt(1);
+    //             order.setOrderID(orderID);
+    //         }
+    //     } catch (SQLException e) {
+    //         System.err.println("Error adding order: " + e.getMessage());
+    //     }
+    // }
 
     public void addProduct(Product product) {
         try {
@@ -164,7 +164,7 @@ public class Db {
             while (resultSet.next()) {
                 int categoryId = resultSet.getInt("CategoryID");
                 String name = resultSet.getString("Name");
-                Category category = new Category(categoryId, name);
+                Category category = new Category(categoryId, name, getProductWithCategoryID(categoryId));
                 categoryList.add(category);
             }
         } catch (SQLException e) {
@@ -279,7 +279,7 @@ public class Db {
                 String email = resultSet.getString("Email");
                 String password = resultSet.getString("Password");
                 String address = resultSet.getString("Address");
-                RegUser user = new RegUser(userId, name, email, password, address);
+                RegUser user = new RegUser(1, userId, name, email, password, address);
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -287,85 +287,84 @@ public class Db {
         }
         return users;
     }
-    
 
-    public ArrayList<Order> getOrders(RegUser user) {
-        ArrayList<Order> orders = new ArrayList<Order>();
-        try {
-            // Prepare a SQL statement that selects orders for the given user
-            PreparedStatement statement = mainConnection.prepareStatement(
-                    "SELECT * FROM \"Order\" JOIN \"User\" ON \"Order\".UserID = \"User\".UserID WHERE \"User\".UserID = ?");
-            statement.setInt(1, user.getUserID());
-    
-            // Execute the statement and get the result set
-            ResultSet resultSet = statement.executeQuery();
-    
-            // For each row in the result set, create an Order object to represent the order and add it to the list
-            while (resultSet.next()) {
-                int orderId = resultSet.getInt("OrderID");
-                Date date = resultSet.getDate("Date");
-                int userId = resultSet.getInt("UserID");
-                Order order = new Order(orderId, date, userId);
-                orders.add(order);
-            }
-        } catch (SQLException e) {
-            System.err.println("Error retrieving orders for user " + user.getUsername() + " from database: " + e.getMessage());
-        }
-        return orders;
-    }
-    
-    public ArrayList<Order> getOrder_items(Order order, Product product) {
-        ArrayList<Order> orders = new ArrayList<Order>();
-        try {
-            // Prepare a SQL statement that selects orders for the given user
-            PreparedStatement statement = mainConnection.prepareStatement(
-                    "SELECT * FROM \"Order\" JOIN \"User\" ON \"Order\".UserID = \"User\".UserID WHERE \"User\".UserID = ?");
-            statement.setInt(1, user.getUserID());
-    
-            // Execute the statement and get the result set
-            ResultSet resultSet = statement.executeQuery();
-    
-            // For each row in the result set, create an Order object to represent the order and add it to the list
-            while (resultSet.next()) {
-                int orderId = resultSet.getInt("OrderID");
-                Date date = resultSet.getDate("Date");
-                int userId = resultSet.getInt("UserID");
-                Order order = new Order(orderId, date, userId);
-                orders.add(order);
-            }
-        } catch (SQLException e) {
-            System.err.println("Error retrieving orders for user " + user.getUsername() + " from database: " + e.getMessage());
-        }
-        return orders;
-    }
+    // public ArrayList<Order> getOrders(RegUser user) {
+    //     ArrayList<Order> orders = new ArrayList<Order>();
+    //     try {
+    //         // Prepare a SQL statement that selects orders for the given user
+    //         PreparedStatement statement = mainConnection.prepareStatement(
+    //                 "SELECT * FROM \"Order\" JOIN \"User\" ON \"Order\".UserID = \"User\".UserID WHERE \"User\".UserID = ?");
+    //         statement.setInt(1, user.getUserID());
 
+    //         // Execute the statement and get the result set
+    //         ResultSet resultSet = statement.executeQuery();
 
+    //         // For each row in the result set, create an Order object to represent the order
+    //         // and add it to the list
+    //         while (resultSet.next()) {
+    //             int orderId = resultSet.getInt("OrderID");
+    //             Date date = resultSet.getDate("Date");
+    //             int userId = resultSet.getInt("UserID");
+    //             Order order = new Order(orderId, date, userId);
+    //             orders.add(order);
+    //         }
+    //     } catch (SQLException e) {
+    //         System.err.println(
+    //                 "Error retrieving orders for user " + user.getUsername() + " from database: " + e.getMessage());
+    //     }
+    //     return orders;
+    // }
 
+    // public ArrayList<Order> getOrder_items(Order order, Product product) {
+    //     ArrayList<Order> orders = new ArrayList<Order>();
+    //     try {
+    //         // Prepare a SQL statement that selects orders for the given user
+    //         PreparedStatement statement = mainConnection.prepareStatement(
+    //                 "SELECT * FROM \"Order\" JOIN \"User\" ON \"Order\".UserID = \"User\".UserID WHERE \"User\".UserID = ?");
+    //         statement.setInt(1, user.getUserID());
 
+    //         // Execute the statement and get the result set
+    //         ResultSet resultSet = statement.executeQuery();
 
-    public Order getOrderWithId(int id) {
-        Order order = null;
-        try {
-            // Prepare a SQL statement that selects an order with the given ID
-            PreparedStatement statement = mainConnection.prepareStatement("SELECT * FROM \"Order\" WHERE OrderID = ?");
-            statement.setInt(1, id);
-    
-            // Execute the statement and get the result set
-            ResultSet resultSet = statement.executeQuery();
-    
-            // If an order with the given ID is found, create an Order object to represent it
-            if (resultSet.next()) {
-                int orderId = resultSet.getInt("OrderID");
-                Date date = resultSet.getDate("Date");
-                int userId = resultSet.getInt("UserID");
-                order = new Order(orderId, date, userId);
-            }
-        } catch (SQLException e) {
-            System.err.println("Error retrieving order with ID " + id + " from database: " + e.getMessage());
-        }
-        return order;
-    }
-    
+    //         // For each row in the result set, create an Order object to represent the order
+    //         // and add it to the list
+    //         while (resultSet.next()) {
+    //             int orderId = resultSet.getInt("OrderID");
+    //             Date date = resultSet.getDate("Date");
+    //             int userId = resultSet.getInt("UserID");
+    //             Order order = new Order(orderId, date, userId);
+    //             orders.add(order);
+    //         }
+    //     } catch (SQLException e) {
+    //         System.err.println(
+    //                 "Error retrieving orders for user " + user.getUsername() + " from database: " + e.getMessage());
+    //     }
+    //     return orders;
+    // }
+
+    // public Order getOrderWithId(int id) {
+    //     Order order = null;
+    //     try {
+    //         // Prepare a SQL statement that selects an order with the given ID
+    //         PreparedStatement statement = mainConnection.prepareStatement("SELECT * FROM \"Order\" WHERE OrderID = ?");
+    //         statement.setInt(1, id);
+
+    //         // Execute the statement and get the result set
+    //         ResultSet resultSet = statement.executeQuery();
+
+    //         // If an order with the given ID is found, create an Order object to represent
+    //         // it
+    //         if (resultSet.next()) {
+    //             int orderId = resultSet.getInt("OrderID");
+    //             Date date = resultSet.getDate("Date");
+    //             int userId = resultSet.getInt("UserID");
+    //             order = new Order(orderId, date, userId);
+    //         }
+    //     } catch (SQLException e) {
+    //         System.err.println("Error retrieving order with ID " + id + " from database: " + e.getMessage());
+    //     }
+    //     return order;
+    // }
 
     public Product getProductWithId(int id) {
         Product product = null;
