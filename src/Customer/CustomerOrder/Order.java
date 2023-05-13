@@ -46,6 +46,10 @@ public class Order {
         return true;
     }
 
+    public RegUser getUser(){
+        return this.user;
+    }
+
     public int getID(){
         return this.orderID;
     }

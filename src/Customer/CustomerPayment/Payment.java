@@ -1,21 +1,42 @@
 package Customer.CustomerPayment;
 
+import Customer.CustomerOrder.Date;
+import Customer.CustomerOrder.Order;
 public abstract class Payment {
-    /*
-     * # paymentID: int
-# paymentDate: Date
-# paymentAmount: int
-# paymentStatus: string
-# orderID : int
+    
+    protected int paymentID;
+    protected Date paymentDate;
+    protected float paymentAmount;
+    protected String paymentStatus;
+    protected int orderID;
+    protected Order order;
+    
 
-    */
+    public Payment(Order order){
+        this.order = order;
+        this.orderID = order.getID();
+        this.paymentStatus = "Pending";
+        this.paymentAmount = order.getTotal();
+        this.paymentDate = order.getDate();
+    }
 
-    /*
-     * + processPayment(currentOrder : Order): void
-+ cancelpayment(): void
-+ viewPaymentDetails(): void
-+ saveOrder(order : Order): void
-# redeemVoucher(voucherID: int , code: int): void
-# redeemPoints(numOfPoints: int): void 
-    */
+    public void processPayment(){};
+
+    public void cancelPayment(){
+        this.paymentStatus = "Cancelled";
+    }
+
+    public void viewPaymentDetails(){
+        System.out.println("Payment ID: " + this.paymentID);
+        System.out.println("Payment Date: " + this.paymentDate);
+        System.out.println("Payment Amount: " + this.paymentAmount);
+        System.out.println("Payment Status: " + this.paymentStatus);
+        System.out.println("Order ID: " + this.orderID);
+    }
+
+    public void saveOrder(){
+        //TODO : implement with database ?
+    }
+
+    
 }
