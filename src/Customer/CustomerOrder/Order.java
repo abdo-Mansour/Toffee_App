@@ -46,6 +46,11 @@ public class Order {
         //TODO: implement payment method
         CashPay cash = new CashPay(this,phoneNum);
         cash.processPayment();
+        user.setPoints(user.getPoints() + ((int)(totalPrice * 0.05)));
+        System.out.println(method + " payment has been processed successfully");
+        System.out.println("You have earned " + ((int)(totalPrice * 0.05)) + " points");
+        System.out.println("Your total points are now " + user.getPoints());
+
         return true;
     }
 

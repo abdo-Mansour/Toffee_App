@@ -13,10 +13,10 @@ public class Product {
     private float discount;
     private String status;
     private Cart userCart;
-    private int availableQuantity;
+    private float availableQuantity;
 
 
-    public Product(int productID ,String name, String itemDescription, String brand, float price, boolean isLoose, float discount, String status , int availableQuantity){
+    public Product(int productID ,String name, String itemDescription, String brand, float price, boolean isLoose, float discount, String status , float availableQuantity){
         this.productID = productID;
         this.name = name;
         // this.category = category;
@@ -36,6 +36,7 @@ public class Product {
             System.out.println("Please login first");
             return;
         }
+        setAvailableQuantity(availableQuantity - (int)amount);
         if(this.isLoose){
             this.userCart.addLoose(this,amount);
         }
@@ -81,11 +82,11 @@ public class Product {
         return this.isLoose;
     }
 
-    public int getAvailableQuantity(){
+    public float getAvailableQuantity(){
         return this.availableQuantity;
     }
 
-    public void setAvailableQuantity(int availableQuantity){
+    public void setAvailableQuantity(float availableQuantity){
         this.availableQuantity = availableQuantity;
     }
 

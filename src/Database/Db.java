@@ -27,7 +27,7 @@ public class Db {
             ResultSet rs = stmt.executeQuery("USE Toffee");
             System.out.println("database connection successful");
         } catch (Exception e) {
-            System.out.println(e);
+            // System.out.println(e);
             System.out.println("database connection exception");
         }
     }
@@ -36,7 +36,7 @@ public class Db {
         try {
             mainConnection.close();
         } catch (Exception e) {
-            System.out.println(e);
+            // System.out.println(e);
         }
     }
 
@@ -53,7 +53,7 @@ public class Db {
             Statement stmt = mainConnection.createStatement();
             stmt.executeUpdate(query);
         } catch (Exception e) {
-            System.out.println(e);
+            // System.out.println(e);
         }
     }
     // checking database functions
@@ -74,7 +74,7 @@ public class Db {
                 return true;
             }
         } catch (SQLException e) {
-            System.err.println("Error checking user: " + e.getMessage());
+            //System.err.println("Error checking user: " + e.getMessage());
         }
 
         // If no user with the given username and password is found, return false
@@ -128,7 +128,7 @@ public class Db {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            System.err.println("Error adding order: " + e.getMessage());
+            //System.err.println("Error adding order: " + e.getMessage());
         }
     }
 
@@ -139,7 +139,7 @@ public class Db {
                             "INSERT INTO \"Product\" (ProductID,Name,Quantity,itemDescription,Brand,Status,isLoose,Price,Discount,CatagoryID) VALUES (?,?,?,?,?,?,?,?,?,?)");
             stmt.setString(1, Integer.toString(product.getID()));
             stmt.setString(2, product.getName());
-            stmt.setString(3, Integer.toString(product.getAvailableQuantity()));
+            stmt.setString(3, Float.toString(product.getAvailableQuantity()));
             stmt.setString(4, product.getDescription());
             stmt.setString(5, product.getBrand());
             stmt.setString(6, product.getStatus());
@@ -149,7 +149,7 @@ public class Db {
             stmt.setString(10, Integer.toString(product.getCategory().getID()));
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Error adding user: " + e.getMessage());
+            //System.err.println("Error adding user: " + e.getMessage());
         }
     }
 
@@ -184,7 +184,7 @@ public class Db {
                 categoryList.add(category);
             }
         } catch (SQLException e) {
-            System.err.println("Error retrieving categories from database: " + e.getMessage());
+            //System.err.println("Error retrieving categories from database: " + e.getMessage());
         }
         return categoryList;
     }
@@ -216,8 +216,7 @@ public class Db {
                 productList.add(product);
             }
         } catch (SQLException e) {
-            System.err.println(
-                    "Error retrieving products with category " + categoryID + " from database: " + e.getMessage());
+            //System.err.println( "Error retrieving products with category " + categoryID + " from database: " + e.getMessage());
         }
         return productList;
     }
@@ -248,7 +247,7 @@ public class Db {
                 productList.add(product);
             }
         } catch (SQLException e) {
-            System.err.println("Error retrieving products with name " + name + " from database: " + e.getMessage());
+            //System.err.println("Error retrieving products with name " + name + " from database: " + e.getMessage());
         }
         return productList;
     }
@@ -279,7 +278,7 @@ public class Db {
                 productList.add(product);
             }
         } catch (SQLException e) {
-            System.err.println("Error retrieving products with brand " + brand + " from database: " + e.getMessage());
+            //System.err.println("Error retrieving products with brand " + brand + " from database: " + e.getMessage());
         }
         return productList;
     }
@@ -299,7 +298,7 @@ public class Db {
                 users.add(user);
             }
         } catch (SQLException e) {
-            System.err.println("Error retrieving users from database: " + e.getMessage());
+            //System.err.println("Error retrieving users from database: " + e.getMessage());
         }
         return users;
     }
@@ -409,7 +408,7 @@ public class Db {
                         quantity);
             }
         } catch (SQLException e) {
-            System.err.println("Error retrieving product with ID " + id + " from database: " + e.getMessage());
+           // System.err.println("Error retrieving product with ID " + id + " from database: " + e.getMessage());
         }
         return product;
     }
@@ -436,7 +435,7 @@ public class Db {
                 user = new RegUser(1, userId, name, email, password, Adress);
             }
         } catch (SQLException e) {
-            System.err.println("Error retrieving user with ID " + id + " from database: " + e.getMessage());
+            //System.err.println("Error retrieving user with ID " + id + " from database: " + e.getMessage());
         }
         return user;
     }
@@ -463,7 +462,7 @@ public class Db {
                 user = new RegUser(1, userId, name, email, password, Adress);
             }
         } catch (SQLException e) {
-            System.err.println("Error retrieving user with ID " + username + " from database: " + e.getMessage());
+            //System.err.println("Error retrieving user with ID " + username + " from database: " + e.getMessage());
         }
         return user;
     } 
