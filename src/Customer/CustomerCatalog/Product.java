@@ -13,9 +13,10 @@ public class Product {
     private float discount;
     private String status;
     private Cart userCart;
+    private int availableQuantity;
 
 
-    Product(int productID ,String name, Category category, String itemDescription, String brand, float price, boolean isLoose, float discount, String status , Cart userCart){
+    Product(int productID ,String name, Category category, String itemDescription, String brand, float price, boolean isLoose, float discount, String status , Cart userCart , int availableQuantity){
         this.productID = productID;
         this.name = name;
         this.category = category;
@@ -26,6 +27,7 @@ public class Product {
         this.discount = discount;
         this.status = status;
         this.userCart = userCart;
+        this.availableQuantity = availableQuantity;
     }
 
 

@@ -14,6 +14,7 @@ public class MainCatalog {
     }
 
     public void loadCatalog(){
+        System.out.println("Loading catalog");
         //TODO: implement by database
         //get all info from database
         //create categories
@@ -38,6 +39,7 @@ public class MainCatalog {
         for(Category cat : categories){
             if(cat.getName().equals(categoryName)){
                 category = cat;
+                break;
             }
         }
         if(category == null){
@@ -58,5 +60,12 @@ public class MainCatalog {
 
     }
 
-
+    //test
+    // public static void main(String[] args) {
+    //     MainCatalog catalog = new MainCatalog();
+    //     ArrayList<Product> products = catalog.returnAll();
+    //     for(Product product : products){
+    //         System.out.println(product.getName());
+    //     }
+    // }
 }

@@ -2,7 +2,7 @@ package Customer.CustomerCart;
 
 import java.util.ArrayList;
 import Customer.CustomerCatalog.Product;
-
+import Customer.CustomerOrder.OrderManager;
 import Customer.CustomerAuthentication.RegUser;
 public class Cart {
 //     - unitItems: UnitItems[]
@@ -25,7 +25,8 @@ public class Cart {
 
 
     public void checkOut(){
-
+        OrderManager orderManager = this.user.getOrderManager();
+        orderManager.placeOrder(this);
     }
 
     public void addLoose(Product product, float amount){
@@ -57,4 +58,7 @@ public class Cart {
         }
     }
 
+    public float getTotal(){
+        return this.total;
+    }
 }

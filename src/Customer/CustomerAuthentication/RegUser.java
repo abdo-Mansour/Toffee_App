@@ -1,6 +1,7 @@
 package Customer.CustomerAuthentication;
 
 import Customer.CustomerCart.Cart;
+import Customer.CustomerOrder.OrderManager;
 public class RegUser {
     
     private int userID;
@@ -39,4 +40,39 @@ public class RegUser {
     public void setPoints(int points){
         this.loyaltyPoints = points;
     }
+
+    //getters and setters
+    public int getUserID(){
+        return this.userID;
+    }
+
+    public String getUsername(){
+        return this.username;
+    }
+
+    public String getUserEmail(){
+        return this.userEmail;
+    }
+
+    public String getUserPassword(){
+        return this.userPassword;
+    }
+
+    public String getUserAddress(){
+        return this.userAddress;
+    }
+
+    public String getUserStatus(){
+        return this.userStatus;
+    }
+
+    public Cart getUserCart(){
+        return this.userCart;
+    }
+
+    public OrderManager getOrderManager(){
+        return this.orderManager;
+    }
+
+    
 }
