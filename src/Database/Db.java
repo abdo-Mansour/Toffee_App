@@ -64,7 +64,12 @@ public class Db{
         return null;
     }
 
+    public ArrayList<Product> getProductWithCategory(String category){
+        return null;
+    }
+
     public ArrayList<Product> getProductWithName(String name){
+        
         return null;
     }
 
@@ -72,7 +77,7 @@ public class Db{
         return null;
     }
 
-    public ArrayList<Order> getOrders(){
+    public ArrayList<Order> getOrders(RegUser user){
         return null;
     }
 
