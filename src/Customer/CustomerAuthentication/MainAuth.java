@@ -87,7 +87,7 @@ public class MainAuth {
 
     }
 
-    public boolean checkPhone(int phoneNum){
+    public static boolean checkPhone(int phoneNum){
         return true;
     }
 
