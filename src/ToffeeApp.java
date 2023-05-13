@@ -128,7 +128,7 @@ public class ToffeeApp {
             if(mainAuth.getRegUser() != null){
                 prod.setCart(mainCart);
             }
-            System.out.println(i + ".  Product:" + prod.getName() + "  price" + prod.getPrice());
+            System.out.println(i + ".  Product: " + prod.getName() + "  price: " + prod.getPrice());
             i++;
         }
 
@@ -160,8 +160,14 @@ public class ToffeeApp {
         }
 
         System.out.println("\nCart:\n");
-        mainCart.printCart();
-        System.out.println("\nTotal: " + mainCart.getTotal());
+        
+        if(mainCart != null){
+            mainCart.printCart();
+        }else{
+            System.out.println("Cart is empty");
+            return;
+        }
+            System.out.println("\nTotal: " + mainCart.getTotal());
         System.out.println("\n1. Checkout");
         System.out.println("2. Back");
         int choice;
@@ -191,7 +197,7 @@ public class ToffeeApp {
         }
         mainOrder = mainAuth.getRegUser().getOrderManager();
         System.out.println("\nCurrent Order:\n");
-        Order currentOrder = mainOrder.getOrder(mainOrder.getCurrentOrderID());
+        Order currentOrder = mainOrder.getOrder(mainOrder.getCurrentOrderID()-1);
         currentOrder.printOrder();
         if(currentOrder != null){
         }

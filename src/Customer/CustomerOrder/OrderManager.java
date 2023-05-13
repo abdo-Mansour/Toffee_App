@@ -39,7 +39,9 @@ public class OrderManager {
     }
 
     public Order getOrder(int id){
+        System.out.println("I am trying to get order with id: " + id + " from " + this.orders.size() + " orders");
         for(Order ord : orders){
+            System.out.println("order id: " + ord.getID());
             if(ord.getID() == id){
                 return ord;
             }
