@@ -83,9 +83,9 @@ public class Db {
                             "INSERT INTO \"User\" (UserID,Name, Email, Password,Address) VALUES (?,?, ?, ?,?)");
             stmt.setString(1, Integer.toString(product.getID()));
             stmt.setString(2, product.getName());
-            stmt.setString(3, product.getquantity());
-            stmt.setString(4, product.getUserPassword());
-            stmt.setString(5, product.getUserAddress());
+            stmt.setString(3, product.getPrice());
+            stmt.setString(4, product.getBrand());
+            stmt.setString(5, product.;
             stmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error adding user: " + e.getMessage());
