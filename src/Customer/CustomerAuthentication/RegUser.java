@@ -73,5 +73,8 @@ public class RegUser {
     public OrderManager getOrderManager() {
         return this.orderManager;
     }
+    public int getLoyaltyPoints() {
+        return this.loyaltyPoints;
+    }
 
 }
