@@ -104,11 +104,5 @@ public class Order {
         this.cart.printCart();
     }
 
-    //testing
-    // public static void main(String[] args) {
-    //     RegUser user = null;
-    //     Cart cart = null;
-    //     Order order = new Order(user,1,cart,"my address blah blah");
-    //     order.printOrder();
-    // }
+
 }

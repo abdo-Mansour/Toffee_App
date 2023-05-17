@@ -40,14 +40,7 @@ public class Db {
         }
     }
 
-    /*
-     * on log in we will read from database
-     * on sign up will read first to check then write
-     * on display category and products we will read from database
-     * on adding category and products we will read first to check then write
-     * on adding orders we will write
-     */
-    //function that executes a query to change the database
+
     public void executeQuery(String query) {
         try {
             Statement stmt = mainConnection.createStatement();
@@ -56,7 +49,7 @@ public class Db {
             // System.out.println(e);
         }
     }
-    //returns the size of the database
+
     public int getSize(String tableName) {
         int size = 0;
         try {
@@ -69,32 +62,24 @@ public class Db {
         }
         return size;
     }
-    // checking database functions
     public boolean checkUser(String username, String password) {
         try {
-            // Prepare a SQL statement that selects a user with the given username and
-            // password
             PreparedStatement statement = mainConnection.prepareStatement(
                     "SELECT * FROM \"User\" WHERE Name = ? AND Password = ?");
             statement.setString(1, username);
             statement.setString(2, password);
 
-            // Execute the statement and get the result set
             ResultSet resultSet = statement.executeQuery();
 
-            // If a user with the given username and password is found, return true
             if (resultSet.next()) {
                 return true;
             }
         } catch (SQLException e) {
-            //System.err.println("Error checking user: " + e.getMessage());
         }
 
-        // If no user with the given username and password is found, return false
         return false;
     }
 
-    // writing database functions
     public void addUser(RegUser user) {
         try {
             PreparedStatement stmt = mainConnection
@@ -124,11 +109,9 @@ public class Db {
     public void addOrder(Order order) {
         try {
             
-            // Prepare a SQL statement that inserts an order into the database
             PreparedStatement statement = mainConnection
                     .prepareStatement("INSERT INTO \"Orders\" (orderID, userID, orderStatus, orderDate, totalPrice, orderDestination) VALUES (?,?,?,?,?,?)");
 
-            // Set the values of the parameters in the SQL statement
             statement.setString(1, Integer.toString(order.getID()));
             statement.setString(2, Integer.toString(order.getUser().getUserID()));
             statement.setString(3, order.getStatus());
@@ -137,7 +120,6 @@ public class Db {
             statement.setString(5, Float.toString(order.getTotal()));
             statement.setString(6, order.getDestination());
 
-            // Execute the SQL statement
             statement.executeUpdate();
 
         } catch (SQLException e) {
@@ -178,18 +160,16 @@ public class Db {
         }
     }
 
-    //Category
-    // reading database functions
+    
     public ArrayList<Category> getCategories() {
         ArrayList<Category> categoryList = new ArrayList<>();
         try {
-            // Prepare a SQL statement that selects all categories
+            
             PreparedStatement statement = mainConnection.prepareStatement("SELECT * FROM Catagory");
 
-            // Execute the statement and get the result set
+            
             ResultSet resultSet = statement.executeQuery();
 
-            // Iterate over the result set and create a Category object for each row
             while (resultSet.next()) {
                 int categoryId = resultSet.getInt("CatagoryID");
                 String name = resultSet.getString("Name");
@@ -205,14 +185,11 @@ public class Db {
     public ArrayList<Product> getProductWithCategoryID(int categoryID) {
         ArrayList<Product> productList = new ArrayList<>();
         try {
-            // Prepare a SQL statement that selects products with the given category
             PreparedStatement statement = mainConnection.prepareStatement("SELECT * FROM Product WHERE CatagoryID = ?");
             statement.setString(1, Integer.toString(categoryID));
 
-            // Execute the statement and get the result set
             ResultSet resultSet = statement.executeQuery();
 
-            // Iterate over the result set and create a Product object for each row
             while (resultSet.next()) {
                 int productId = resultSet.getInt("ProductID");
                 String name = resultSet.getString("Name");
@@ -237,14 +214,11 @@ public class Db {
     public ArrayList<Product> getProductWithName(String name) {
         ArrayList<Product> productList = new ArrayList<>();
         try {
-            // Prepare a SQL statement that selects products with the given name
             PreparedStatement statement = mainConnection.prepareStatement("SELECT * FROM Product WHERE Name = ?");
             statement.setString(1, name);
 
-            // Execute the statement and get the result set
             ResultSet resultSet = statement.executeQuery();
 
-            // Iterate over the result set and create a Product object for each row
             while (resultSet.next()) {
                 int productId = resultSet.getInt("ProductID");
                 int quantity = resultSet.getInt("Quantity");
@@ -268,14 +242,11 @@ public class Db {
     public ArrayList<Product> getProductWithBrand(String brand) {
         ArrayList<Product> productList = new ArrayList<>();
         try {
-            // Prepare a SQL statement that selects products with the given brand
             PreparedStatement statement = mainConnection.prepareStatement("SELECT * FROM Product WHERE Brand = ?");
             statement.setString(1, brand);
 
-            // Execute the statement and get the result set
             ResultSet resultSet = statement.executeQuery();
 
-            // Iterate over the result set and create a Product object for each row
             while (resultSet.next()) {
                 int productId = resultSet.getInt("ProductID");
                 String name = resultSet.getString("Name");
@@ -397,15 +368,12 @@ public class Db {
     public Product getProductWithId(int id) {
         Product product = null;
         try {
-            // Prepare a SQL statement that selects a product with the given ID
             PreparedStatement statement = mainConnection.prepareStatement("SELECT * FROM Product WHERE ProductID = ?");
             statement.setInt(1, id);
 
-            // Execute the statement and get the result set
             ResultSet resultSet = statement.executeQuery();
 
-            // If a product with the given ID is found, create a Product object to represent
-            // it
+            
             if (resultSet.next()) {
                 int productId = resultSet.getInt("ProductID");
                 String name = resultSet.getString("Name");
@@ -430,14 +398,11 @@ public class Db {
         RegUser user = null;
         try {
 
-            // Prepare a SQL statement that selects a user with the given ID
             PreparedStatement statement = mainConnection.prepareStatement("SELECT * FROM \"User\" WHERE UserID = ?");
             statement.setInt(1, id);
 
-            // Execute the statement and get the result set
             ResultSet resultSet = statement.executeQuery();
 
-            // If a user with the given ID is found, create a RegUser object to represent it
             if (resultSet.next()) {
                 int userId = resultSet.getInt("UserID");
                 String name = resultSet.getString("Name");
@@ -457,11 +422,9 @@ public class Db {
         RegUser user = null;
         try {
 
-            // Prepare a SQL statement that selects a user with the given ID
             PreparedStatement statement = mainConnection.prepareStatement("SELECT * FROM \"User\" WHERE Name = ?");
             statement.setString(1, username);
 
-            // Execute the statement and get the result set
             ResultSet resultSet = statement.executeQuery();
 
             // If a user with the given ID is found, create a RegUser object to represent it
@@ -480,6 +443,5 @@ public class Db {
         return user;
     } 
 
-    // for testing
 
 }
