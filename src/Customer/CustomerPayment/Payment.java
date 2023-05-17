@@ -2,6 +2,7 @@ package Customer.CustomerPayment;
 
 import Customer.CustomerOrder.Date;
 import Customer.CustomerOrder.Order;
+import Database.Db;
 public abstract class Payment {
     
     protected int paymentID;
@@ -10,6 +11,7 @@ public abstract class Payment {
     protected String paymentStatus;
     protected int orderID;
     protected Order order;
+    protected Db db = new Db();
     
 
     public Payment(Order order){
@@ -35,6 +37,9 @@ public abstract class Payment {
     }
 
     public void saveOrder(){
+        db.connectServer();
+        db.addOrder(this.order);
+        db.closeConnection();
         //TODO : implement with database ?
     }
 

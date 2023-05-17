@@ -1,4 +1,4 @@
-import java.lang.reflect.Array;
+
 import java.util.Scanner;
 
 import Customer.CustomerAuthentication.*;
@@ -69,7 +69,7 @@ public class ToffeeApp {
             System.out.println("\nLogin Successful");
             System.out.println("Welcome " + username);
             mainAuth.setUser(db.getUserUsingUsername(username));
-            //TODO: create user object
+            
         }else{
             System.out.println("\n Invalid username or password");
         }
@@ -87,7 +87,7 @@ public class ToffeeApp {
         System.out.println("1. View Catalog");
         if(mainAuth.getRegUser() != null){
             System.out.println("2. View Cart");
-            System.out.println("3. View Orders History");
+            System.out.println("3. View Order");
         }
 
         int choice;

@@ -106,6 +106,9 @@ public class MainAuth {
     }
 
     private int generateUserID(){
+        db.connectServer();
+        userID = db.getSize("\"User\"");
+        db.closeConnection();
         return userID++;
     }
 

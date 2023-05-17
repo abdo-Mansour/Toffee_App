@@ -56,6 +56,19 @@ public class Db {
             // System.out.println(e);
         }
     }
+    //returns the size of the database
+    public int getSize(String tableName) {
+        int size = 0;
+        try {
+            Statement stmt = mainConnection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM " + tableName);
+            rs.next();
+            size = rs.getInt(1);
+        } catch (Exception e) {
+            // System.out.println(e);
+        }
+        return size;
+    }
     // checking database functions
     public boolean checkUser(String username, String password) {
         try {
